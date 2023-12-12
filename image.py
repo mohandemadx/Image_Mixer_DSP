@@ -1,14 +1,15 @@
-from PyQt5.QtWidgets import QLabel, QVBoxLayout, QWidget
 from PyQt5.QtGui import QPixmap
 import cv2
 import numpy as np
 
 class Image:
+    
     def __init__(self, image_path, width, height):
         self.image_path = image_path
         self.width = width
         self.height = height
         self.image = self.read_image
+
 
     def read_image(self):
         image = cv2.imread(self.image_path,0)
@@ -16,11 +17,13 @@ class Image:
             image = cv2.resize(image, (self.width,self.height))
             return image
 
-    def set_image(self, image_path, image_label):
+
+    def set_image(self, image_label):
         # Load image and display it in the QLabel
-        pixmap = QPixmap(image_path)
+        pixmap = QPixmap(self.image_path)
         image_label.setPixmap(pixmap)
         image_label.setFixedSize(pixmap.size())
+        
         
     def calculate_img_magnitude_phase(self):
         # Perform Fourier transform

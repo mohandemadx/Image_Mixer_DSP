@@ -24,3 +24,4 @@ def create_images(image_num, frame):
 
     frame.setLayout(layout)
     return images_list
+
