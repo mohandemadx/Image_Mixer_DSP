@@ -15,7 +15,66 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
+    <item row="1" column="3">
+     <widget class="QFrame" name="frame_3">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Output Table</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="outimage1">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton1">
+         <property name="text">
+          <string>Output Channel 1</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="outimage2">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton2">
+         <property name="text">
+          <string>Output Channel 2</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
      <widget class="QFrame" name="imageFrame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -24,126 +83,7 @@
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="2" column="0">
-        <widget class="QLabel" name="image2">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
-        <widget class="QLabel" name="label3">
-         <property name="text">
-          <string>Add Image 3</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="image4">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
-        <widget class="QLabel" name="label2">
-         <property name="text">
-          <string>Add Image 2</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
-        <widget class="QLabel" name="label4">
-         <property name="text">
-          <string>Add Image 4</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
-        <widget class="QLabel" name="label1">
-         <property name="text">
-          <string>Add Image 1</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="image1">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="image3">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="Gimage1">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="Gimage2">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="Gimage3">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
+       <item row="11" column="2" colspan="2">
         <widget class="QLabel" name="Gimage4">
          <property name="text">
           <string/>
@@ -156,74 +96,289 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="1" alignment="Qt::AlignHCenter|Qt::AlignTop">
+       <item row="1" column="2" colspan="2">
+        <widget class="QLabel" name="Gimage1">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Input Table</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="4">
+        <widget class="QSlider" name="slider4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0" colspan="2">
+        <widget class="QLabel" name="image4">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="3">
         <widget class="QLabel" name="Glabel4">
          <property name="text">
           <string>GreyScaled - Image 4</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1" alignment="Qt::AlignHCenter|Qt::AlignTop">
-        <widget class="QLabel" name="Glabel3">
+       <item row="4" column="0" rowspan="2" colspan="2">
+        <widget class="QLabel" name="image2">
          <property name="text">
-          <string>GreyScaled - Image 3</string>
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
-       <item row="3" column="1" alignment="Qt::AlignHCenter|Qt::AlignTop">
-        <widget class="QLabel" name="Glabel2">
+       <item row="4" column="2" rowspan="2" colspan="2">
+        <widget class="QLabel" name="Gimage2">
          <property name="text">
-          <string>GreyScaled - Image 2 </string>
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
-       <item row="1" column="1" alignment="Qt::AlignHCenter|Qt::AlignTop">
+       <item row="10" column="2">
+        <widget class="QComboBox" name="comboBox_3">
+         <item>
+          <property name="text">
+           <string>Real/Imaginary</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>New Item</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="6" column="0" rowspan="2" colspan="2">
+        <widget class="QPushButton" name="button2">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255, 0);
+</string>
+         </property>
+         <property name="text">
+          <string>Add Image 2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="image1">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0" rowspan="2" colspan="2">
+        <widget class="QPushButton" name="button4">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255, 0);
+</string>
+         </property>
+         <property name="text">
+          <string>Add Image 4</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0" rowspan="2" colspan="2">
+        <widget class="QPushButton" name="button3">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255, 0);
+</string>
+         </property>
+         <property name="text">
+          <string>Add Image 3</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QSlider" name="slider1">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QSlider" name="slider2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="4">
+        <widget class="QSlider" name="slider3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0" colspan="2">
+        <widget class="QLabel" name="image3">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="2">
+        <widget class="QComboBox" name="comboBox_4">
+         <item>
+          <property name="text">
+           <string>Real/Imaginary</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Mag/Phase</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="0" rowspan="2" colspan="2">
+        <widget class="QPushButton" name="button1">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255, 0);
+</string>
+         </property>
+         <property name="text">
+          <string>Add Image 1</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2" colspan="2">
+        <widget class="QLabel" name="Gimage3">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QComboBox" name="comboBox_2">
+         <item>
+          <property name="text">
+           <string>Real/Imaginary</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Mag/Phase</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string>Real/Imaginary</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Mag/Pahse</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="3">
         <widget class="QLabel" name="Glabel1">
          <property name="text">
           <string>GreyScaled - Image 1</string>
          </property>
         </widget>
        </item>
+       <item row="9" column="3">
+        <widget class="QLabel" name="Glabel3">
+         <property name="text">
+          <string>GreyScaled - Image 3</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QLabel" name="Glabel2">
+         <property name="text">
+          <string>GreyScaled - Image 2 </string>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="0" colspan="5">
+        <widget class="QProgressBar" name="progressBar">
+         <property name="value">
+          <number>24</number>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QFrame" name="frame_3">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+    <item row="0" column="0" colspan="4">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Image Mixer</string>
       </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </widget>
+    </item>
+    <item row="1" column="1">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>

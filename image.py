@@ -1,6 +1,8 @@
 from PyQt5.QtGui import QPixmap
 import cv2
+from matplotlib import pylab
 import numpy as np
+import matplotlib as plt
 
 class Image:
     
@@ -9,7 +11,6 @@ class Image:
         self.width = width
         self.height = height
         self.image = self.read_image
-
 
     def read_image(self):
         image = cv2.imread(self.image_path,0)
@@ -31,11 +32,11 @@ class Image:
         f_transform_shifted = np.fft.fftshift(f_transform)
 
         # Compute real and imaginary parts
-        self.real_part = np.real(f_transform_shifted)
-        self.imaginary_part = np.imag(f_transform_shifted)
+        real_part = np.real(f_transform_shifted)
+        imaginary_part = np.imag(f_transform_shifted)
 
         # Compute magnitude and phase
-        self.magnitude_spectrum = np.abs(f_transform_shifted)
-        self.phase_spectrum = np.angle(f_transform_shifted)
+        magnitude_spectrum = np.abs(f_transform_shifted)
+        phase_spectrum = np.angle(f_transform_shifted)
         
-        
+        return real_part, imaginary_part, magnitude_spectrum, phase_spectrum

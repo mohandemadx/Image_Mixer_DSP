@@ -19,26 +19,15 @@ class MainApp(QMainWindow, FORM_CLASS):
         
         # Variables
         self.filters = "Images (*.png *.jpg *.bmp)" 
-        self.image_list = f.create_images(4, self.imageFrame)
         
         # Signals
         # self.image = QClickableLabel('', self.image1)
         # self.image.mouseDoubleClickEvent = self.upload(self.filters, self.label1)
         
-        self.refresh_images
         
         
     # Functions
     
-    def handle_image_click(self, event):
-        print("Custom handle_image_click method")
-        self.upload(self.filters, self.label1)
-        
-    def refresh_images(self):
-        if self.image_list:
-            for image in self.image_list:
-                image.mouseDoubleClickEvent = self.handle_image_click
-       
     def upload(self, filters, label):
         # General Function kan mfrood n3mlhaa mn sana bdl m7na bn3ml wa7da gdeeda kol mara
         options = QFileDialog.Options()
@@ -58,9 +47,9 @@ class MainApp(QMainWindow, FORM_CLASS):
 def main():
     app = QApplication(sys.argv)
 
-    with open("style.qss", "r") as f:
-        _style = f.read()
-        app.setStyleSheet(_style)
+    # with open("style.qss", "r") as f:
+    #     _style = f.read()
+    #     app.setStyleSheet(_style)
 
     window = MainApp()
     window.show()
