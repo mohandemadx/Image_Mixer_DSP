@@ -26,6 +26,8 @@ class MainApp(QMainWindow, FORM_CLASS):
         # self.image.mouseDoubleClickEvent = self.upload(self.filters, self.label1)
         
         self.refresh_images
+        
+        
     # Functions
     
     def handle_image_click(self, event):
