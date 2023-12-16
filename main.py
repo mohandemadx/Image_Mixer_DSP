@@ -56,7 +56,7 @@ class MainApp(QMainWindow, FORM_CLASS):
             image_for_fourier = image.read_image()
             real_part, imaginary_part, magnitude_spectrum, phase_spectrum = image.calculate_img_magnitude_phase(
                 image_for_fourier)
-            f.plot_fourier_component(magnitude_spectrum, real_part, imaginary_part, magnitude_spectrum, phase_spectrum, self.Gimage1)
+            f.plot_fourier_component(magnitude_spectrum, real_part, imaginary_part,phase_spectrum,self.Gimage1,2)
         except Exception as e:
             print(f"Error loading Fourier component: {e}")
 
