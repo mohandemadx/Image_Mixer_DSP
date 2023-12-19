@@ -32,17 +32,17 @@ def create_images(image_num, frame):
 
 def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_spectrum ,label, index=3):
     if index == 0:
-        q_img = numpy_array_to_qpixmap(real_part)
+        q_img =convert_component_to_qimage(real_part)
         label.setPixmap(q_img)
         label.setScaledContents(True)
         label.setWindowTitle('Real Part')
     elif index == 1:
-        q_img = numpy_array_to_qpixmap(imaginary_part)
+        q_img = convert_component_to_qimage(imaginary_part)
         label.setPixmap(q_img)
         label.setScaledContents(True)
         label.setWindowTitle('Imaginary Part')
     elif index == 2:
-        q_img = numpy_array_to_qpixmap(phase_spectrum)
+        q_img = convert_component_to_qimage(phase_spectrum)
         label.setPixmap(q_img)
         label.setScaledContents(True)
         label.setWindowTitle('Phase Spectrum')
@@ -56,20 +56,24 @@ def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_
             magnitude_spectrum = np.zeros_like(magnitude_spectrum)
 
             # Convert NumPy array to QPixmap for display
-        q_img = numpy_to_qpixmap(magnitude_spectrum)
+        q_img = convert_component_to_qimage(magnitude_spectrum)
         label.setPixmap(q_img)
         label.setScaledContents(True)
         label.setWindowTitle('Magnitude Spectrum')
 
-def numpy_array_to_qpixmap(numpy_array):
-    if len(numpy_array.shape) == 2 or (len(numpy_array.shape) == 3 and numpy_array.shape[2] == 1):
-        # If the array is 2D (grayscale) or has a single channel, convert it to RGB
-        numpy_array = np.stack([numpy_array, numpy_array, numpy_array], axis=-1)
+def convert_component_to_qimage(component):
+    # Normalize the component values to the range [0, 255] and convert to uint8
+    component = (component / np.max(component) * 255).astype(np.uint8)
+    height, width= component.shape
+    # Calculate the number of bytes per line in the image
+    bytes_per_line = component.shape[1]
 
-    height, width, channel = numpy_array.shape
-    bytes_per_line = 3 * width
-    q_image = QImage(numpy_array.data.tobytes(), width, height, bytes_per_line, QImage.Format_RGB888)
+    # Create a QImage from the component data
+    q_image = QImage(component.data.tobytes(), width, height, bytes_per_line, QImage.Format_Grayscale8)
     q_pixmap = QPixmap.fromImage(q_image)
+    #     return q_pixmap
+
+    # Return the QImage object
     return q_pixmap
 
 # def numpy_to_qpixmap(numpy_array):

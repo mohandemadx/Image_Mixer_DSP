@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDesktopWidget
 from PyQt5.QtGui import QPixmap, QImage
 from os import path
 from image import Image
@@ -24,14 +24,14 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.filters = "Images (*.png *.jpg *.bmp)"
 
         # Signals
-        self.button1.clicked.connect(lambda: self.upload(self.image1))
-        self.button2.clicked.connect(lambda: self.upload(self.image2))
-        self.button3.clicked.connect(lambda: self.upload(self.image3))
-        self.button4.clicked.connect(lambda: self.upload(self.image4))
+        self.button1.clicked.connect(lambda: self.upload(self.image1,self.Gimage1))
+        self.button2.clicked.connect(lambda: self.upload(self.image2,self.Gimage2))
+        self.button3.clicked.connect(lambda: self.upload(self.image3,self.Gimage3))
+        self.button4.clicked.connect(lambda: self.upload(self.image4,self.Gimage4))
 
     # Functions
 
-    def upload(self, label):
+    def upload(self, label,fourier_label):
         filters = "Images (*.jpg *.jpeg *.png);;All Files (*)"
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
@@ -49,14 +49,14 @@ class MainApp(QMainWindow, FORM_CLASS):
             image.set_image(label)
 
             # Perform Fourier transform asynchronously
-            self.load_fourier_component(image)
+            self.load_fourier_component(image,fourier_label)
 
-    def load_fourier_component(self, image):
+    def load_fourier_component(self, image,fourier_label):
         try:
             image_for_fourier = image.read_image()
             real_part, imaginary_part, magnitude_spectrum, phase_spectrum = image.calculate_img_magnitude_phase(
                 image_for_fourier)
-            f.plot_fourier_component(magnitude_spectrum, real_part, imaginary_part,phase_spectrum,self.Gimage1,2)
+            f.plot_fourier_component(magnitude_spectrum, real_part, imaginary_part,phase_spectrum,fourier_label)
         except Exception as e:
             print(f"Error loading Fourier component: {e}")
 
@@ -71,9 +71,18 @@ def main():
     # with open("style.qss", "r") as f:
     #     _style = f.read()
     #     app.setStyleSheet(_style)
-
     window = MainApp()
-    window.show()
+    window = MainApp()
+
+    # Center the window on the screen
+    screen_geometry = app.desktop().availableGeometry()
+    window_geometry = window.frameGeometry()
+    window.move((screen_geometry.width() - window_geometry.width()) // 2,
+                (screen_geometry.height() - window_geometry.height()) // 2)
+
+    # Show the window without maximizing
+    window.showNormal()
+
     app.exec_()
 
 
