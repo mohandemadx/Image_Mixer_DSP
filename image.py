@@ -67,3 +67,39 @@ class Image:
             except Exception as e:
                 print(f"Error in calculate_img_magnitude_phase: {e}")
                 return None, None, None, None
+
+    def adjust_brightness(self, factor, image_label):
+        image = self.read_image()
+        try:
+                adjusted_image = self.adjust_brightness_opencv(image, factor)
+
+                if adjusted_image is not None:
+                    # Convert the adjusted image to QImage using OpenCV
+                    q_image = self.convert_image_to_qimage(adjusted_image)
+
+                    # Display the adjusted image in the label
+                    image_label.setPixmap(QPixmap.fromImage(q_image))
+                    image_label.setFixedSize(image_label.size())
+
+        except Exception as e:
+                print(f"Error adjusting brightness: {e}")
+
+    def adjust_brightness_opencv(self, image, factor):
+        try:
+            # Convert the image to float
+            image_float = image.astype('float32') / 255.0
+
+            # Adjust the brightness using OpenCV
+            adjusted_image = cv2.multiply(image_float, factor)
+
+            # Clip the values to stay within the valid range [0, 1]
+            adjusted_image = np.clip(adjusted_image, 0, 1)
+
+            # Convert back to uint8 format
+            adjusted_image = (adjusted_image * 255).astype('uint8')
+
+            return adjusted_image
+
+        except Exception as e:
+            print(f"Error in adjust_brightness_opencv: {e}")
+            return None  # or handle the error in a way that makes sense for your application
