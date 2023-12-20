@@ -19,9 +19,6 @@ class Image:
         try:
             image = cv2.imread(self.image_path, cv2.IMREAD_GRAYSCALE)
 
-            # Optionally, resize the image based on width and height parameters
-            if self.width > 0 and self.height > 0:
-                image = cv2.resize(image, (self.width, self.height))
 
             return image
         except Exception as e:
@@ -102,4 +99,4 @@ class Image:
 
         except Exception as e:
             print(f"Error in adjust_brightness_opencv: {e}")
-            return None  # or handle the error in a way that makes sense for your application
+            return None
