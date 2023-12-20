@@ -71,7 +71,26 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Mixer Progress Bar:</string>
+         </property>
+        </widget>
+       </item>
       </layout>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="4">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Image Mixer</string>
+      </property>
      </widget>
     </item>
     <item row="1" column="0">
@@ -83,67 +102,7 @@
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="11" column="2" colspan="2">
-        <widget class="QLabel" name="Gimage4">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2" colspan="2">
-        <widget class="QLabel" name="Gimage1">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Input Table</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="4">
-        <widget class="QSlider" name="slider4">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="0" colspan="2">
-        <widget class="QLabel" name="image4">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="3">
-        <widget class="QLabel" name="Glabel4">
-         <property name="text">
-          <string>GreyScaled - Image 4</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" rowspan="2" colspan="2">
+       <item row="6" column="0" rowspan="2">
         <widget class="QLabel" name="image2">
          <property name="text">
           <string/>
@@ -156,8 +115,8 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="2" rowspan="2" colspan="2">
-        <widget class="QLabel" name="Gimage2">
+       <item row="3" column="2">
+        <widget class="QLabel" name="Gimage1">
          <property name="text">
           <string/>
          </property>
@@ -169,21 +128,55 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="2">
-        <widget class="QComboBox" name="comboBox_3">
-         <item>
-          <property name="text">
-           <string>Real/Imaginary</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>New Item</string>
-          </property>
-         </item>
+       <item row="11" column="4">
+        <widget class="QSlider" name="slider3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
         </widget>
        </item>
-       <item row="6" column="0" rowspan="2" colspan="2">
+       <item row="1" column="3">
+        <widget class="QRadioButton" name="real_imaginary1">
+         <property name="text">
+          <string>Real/Imaginary</string>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="4">
+        <widget class="QSlider" name="slider4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="3">
+        <widget class="QRadioButton" name="real_imaginary3">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Real/Imaginary</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4">
+        <widget class="QSlider" name="slider1">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="3">
+        <widget class="QRadioButton" name="magnitude_phase4">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Magnitude/Phase</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0" rowspan="2" colspan="2">
         <widget class="QPushButton" name="button2">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255, 0);
@@ -194,8 +187,18 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QLabel" name="image1">
+       <item row="5" column="3">
+        <widget class="QRadioButton" name="magnitude_phase2">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Magnitude/Phase</string>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="2">
+        <widget class="QLabel" name="Gimage4">
          <property name="text">
           <string/>
          </property>
@@ -208,17 +211,6 @@
         </widget>
        </item>
        <item row="12" column="0" rowspan="2" colspan="2">
-        <widget class="QPushButton" name="button4">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255, 0);
-</string>
-         </property>
-         <property name="text">
-          <string>Add Image 4</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0" rowspan="2" colspan="2">
         <widget class="QPushButton" name="button3">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255, 0);
@@ -229,28 +221,31 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="4">
-        <widget class="QSlider" name="slider1">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="13" column="3">
+        <widget class="QRadioButton" name="real_imaginary4">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Real/Imaginary</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="4">
+       <item row="6" column="4">
         <widget class="QSlider" name="slider2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
-       <item row="8" column="4">
-        <widget class="QSlider" name="slider3">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Input Table</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="0" colspan="2">
+       <item row="11" column="0">
         <widget class="QLabel" name="image3">
          <property name="text">
           <string/>
@@ -263,32 +258,50 @@
          </property>
         </widget>
        </item>
-       <item row="13" column="2">
-        <widget class="QComboBox" name="comboBox_4">
-         <item>
-          <property name="text">
-           <string>Real/Imaginary</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Mag/Phase</string>
-          </property>
-         </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="image1">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
-       <item row="2" column="0" rowspan="2" colspan="2">
-        <widget class="QPushButton" name="button1">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255, 0);
-</string>
+       <item row="0" column="2">
+        <widget class="QLabel" name="Glabel1">
+         <property name="text">
+          <string>Fourier Transform</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QRadioButton" name="real_imaginary1_2">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
          <property name="text">
-          <string>Add Image 1</string>
+          <string>Real/Imaginary</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="2" colspan="2">
+       <item row="6" column="2" rowspan="2">
+        <widget class="QLabel" name="Gimage2">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="2">
         <widget class="QLabel" name="Gimage3">
          <property name="text">
           <string/>
@@ -301,70 +314,155 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
-        <widget class="QComboBox" name="comboBox_2">
-         <item>
-          <property name="text">
-           <string>Real/Imaginary</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Mag/Phase</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QComboBox" name="comboBox">
-         <item>
-          <property name="text">
-           <string>Real/Imaginary</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Mag/Pahse</string>
-          </property>
-         </item>
+       <item row="15" column="0">
+        <widget class="QLabel" name="image4">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/newPrefix/icons/2094736.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item row="2" column="3">
-        <widget class="QLabel" name="Glabel1">
+        <widget class="QRadioButton" name="magnitude_phase1">
          <property name="text">
-          <string>GreyScaled - Image 1</string>
+          <string>Magnitude/Phase</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="3">
-        <widget class="QLabel" name="Glabel3">
+       <item row="9" column="2">
+        <widget class="QComboBox" name="Fourier_comboBox_3">
+         <item>
+          <property name="text">
+           <string>Real</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Imaginary</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Magnitude</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Phase</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="13" column="2">
+        <widget class="QComboBox" name="Fourier_comboBox_4">
+         <item>
+          <property name="text">
+           <string>Real</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Imaginary</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Magnitude</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Phase</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QComboBox" name="Fourier_comboBox_2">
+         <item>
+          <property name="text">
+           <string>Real</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Imaginary</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Magnitude</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Phase</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="16" column="0" rowspan="2" colspan="2">
+        <widget class="QPushButton" name="button4">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255, 0);
+</string>
+         </property>
          <property name="text">
-          <string>GreyScaled - Image 3</string>
+          <string>Add Image 4</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="3">
-        <widget class="QLabel" name="Glabel2">
+       <item row="10" column="3">
+        <widget class="QRadioButton" name="magnitude_phase3">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
-          <string>GreyScaled - Image 2 </string>
+          <string>Magnitude/Phase</string>
          </property>
         </widget>
        </item>
-       <item row="14" column="0" colspan="5">
-        <widget class="QProgressBar" name="progressBar">
-         <property name="value">
-          <number>24</number>
+       <item row="1" column="2">
+        <widget class="QComboBox" name="Fourier_comboBox_1">
+         <item>
+          <property name="text">
+           <string>Real</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Imaginary</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Magnitude</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Phase</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="4" column="0" rowspan="2" colspan="2">
+        <widget class="QPushButton" name="button1">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255, 0);
+</string>
+         </property>
+         <property name="text">
+          <string>Add Image 1</string>
          </property>
         </widget>
        </item>
       </layout>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="4">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Image Mixer</string>
-      </property>
      </widget>
     </item>
     <item row="1" column="1">
@@ -379,6 +477,13 @@
        </size>
       </property>
      </spacer>
+    </item>
+    <item row="2" column="3">
+     <widget class="QProgressBar" name="progressBar">
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

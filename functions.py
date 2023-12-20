@@ -30,7 +30,7 @@ def create_images(image_num, frame):
     frame.setLayout(layout)
     return images_list
 
-def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_spectrum ,label, index=3):
+def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_spectrum ,label, index):
     if index == 0:
         q_img =convert_component_to_qimage(real_part)
         label.setPixmap(q_img)
