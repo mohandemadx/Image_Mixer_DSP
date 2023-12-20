@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1268</width>
-    <height>1697</height>
+    <width>1275</width>
+    <height>1341</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -56,8 +56,69 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
          <property name="text">
-          <string>Output Table</string>
+          <string>Mixer:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Select Region:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton">
+         <property name="text">
+          <string>Inner Region</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_2">
+         <property name="text">
+          <string>Outer Region</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="region_selecter">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Choose Components:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="real_imaginary1">
+         <property name="text">
+          <string>Real/Imaginary</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="magnitude_phase1">
+         <property name="text">
+          <string>Magnitude/Phase</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Apply Mixer</string>
          </property>
         </widget>
        </item>
@@ -128,15 +189,18 @@
       </property>
      </spacer>
     </item>
-    <item row="3" column="1">
-     <spacer name="verticalSpacer_2">
+    <item row="2" column="0">
+     <spacer name="horizontalSpacer">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>20</width>
-        <height>40</height>
+        <width>40</width>
+        <height>20</height>
        </size>
       </property>
      </spacer>
@@ -150,7 +214,7 @@
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="23" column="2" colspan="2">
+       <item row="24" column="2" colspan="2">
         <widget class="QComboBox" name="Fourier_comboBox_4">
          <item>
           <property name="text">
@@ -174,7 +238,7 @@
          </item>
         </widget>
        </item>
-       <item row="11" column="2" colspan="2">
+       <item row="16" column="2" colspan="2">
         <widget class="QComboBox" name="Fourier_comboBox_2">
          <item>
           <property name="text">
@@ -198,7 +262,14 @@
          </item>
         </widget>
        </item>
-       <item row="9" column="0" colspan="2">
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Input Table</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="0" colspan="2">
         <widget class="QGraphicsView" name="image2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -208,38 +279,17 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="9" column="0">
         <widget class="QGraphicsView" name="image1"/>
        </item>
-       <item row="13" column="2">
-        <widget class="QSlider" name="region_selecter2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="2">
-        <widget class="QLabel" name="label_6">
+       <item row="8" column="2">
+        <widget class="QLabel" name="Glabel1">
          <property name="text">
-          <string>Select Region:</string>
+          <string>Fourier Transform</string>
          </property>
         </widget>
        </item>
-       <item row="25" column="2">
-        <widget class="QSlider" name="region_selecter4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="20" column="2">
-        <widget class="QSlider" name="region_selecter3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="22" column="0" colspan="2">
+       <item row="23" column="0" colspan="2">
         <widget class="QGraphicsView" name="image4">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -249,49 +299,21 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="4">
+       <item row="9" column="4">
         <widget class="QSlider" name="slider1">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="Glabel1">
-         <property name="text">
-          <string>Fourier Transform</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Input Table</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="2">
-        <widget class="QSlider" name="region_selecter1">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="17" column="4">
+       <item row="20" column="4">
         <widget class="QSlider" name="slider3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
-       <item row="7" column="2">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Select Region:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="17" column="2" colspan="2">
+       <item row="20" column="2" colspan="2">
         <widget class="QGraphicsView" name="Gimage3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -301,7 +323,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="2" colspan="2">
+       <item row="9" column="2" colspan="2">
         <widget class="QGraphicsView" name="Gimage1">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -318,48 +340,13 @@
         </widget>
        </item>
        <item row="13" column="4">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="25" column="4">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="19" column="2">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Select Region:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="4">
         <widget class="QSlider" name="slider2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
-       <item row="0" column="4">
-        <widget class="QRadioButton" name="real_imaginary1">
-         <property name="text">
-          <string>Real/Imaginary</string>
-         </property>
-        </widget>
-       </item>
-       <item row="22" column="4">
-        <widget class="QSlider" name="slider4">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="22" column="2" colspan="2">
+       <item row="23" column="2" colspan="2">
         <widget class="QGraphicsView" name="Gimage4">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -369,7 +356,14 @@
          </property>
         </widget>
        </item>
-       <item row="17" column="0" colspan="2">
+       <item row="23" column="4">
+        <widget class="QSlider" name="slider4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="20" column="0" colspan="2">
         <widget class="QGraphicsView" name="image3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -379,14 +373,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="4">
-        <widget class="QRadioButton" name="magnitude_phase1">
-         <property name="text">
-          <string>Magnitude/Phase</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="2" colspan="2">
+       <item row="13" column="2" colspan="2">
         <widget class="QGraphicsView" name="Gimage2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -396,21 +383,7 @@
          </property>
         </widget>
        </item>
-       <item row="20" column="4">
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="4">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2" colspan="2">
+       <item row="11" column="2" colspan="2">
         <widget class="QComboBox" name="Fourier_comboBox_1">
          <item>
           <property name="text">
@@ -434,14 +407,7 @@
          </item>
         </widget>
        </item>
-       <item row="24" column="2">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Select Region:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="18" column="2" colspan="2">
+       <item row="21" column="2" colspan="2">
         <widget class="QComboBox" name="Fourier_comboBox_3">
          <item>
           <property name="text">
@@ -468,29 +434,6 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="0">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="3">
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>Apply Mixer</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -498,7 +441,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1268</width>
+     <width>1275</width>
      <height>26</height>
     </rect>
    </property>
@@ -508,54 +451,5 @@
  <resources>
   <include location="icons.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>region_selecter2</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>label_9</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>555</x>
-     <y>713</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>606</x>
-     <y>716</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>region_selecter3</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>label_10</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>570</x>
-     <y>994</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>608</x>
-     <y>1003</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>region_selecter4</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>label_11</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>548</x>
-     <y>1270</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>613</x>
-     <y>1278</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

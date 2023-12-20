@@ -52,33 +52,80 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.image4.setMouseTracking(True)
         self.image4.mouseMoveEvent = lambda event: self.on_label_mouse_move(event, self.image4)
 
-        self.Fourier_comboBox_1.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.all_images_components[0][0], self.all_images_components[0][1],self.all_images_components[0][2] ,self.all_images_components[0][3],self.Gimage1,self.Fourier_comboBox_1.currentIndex(),self.region_selecter1.value(),self.region_selecter1.value()))
+        self.Fourier_comboBox_1.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.all_images_components[0][0], self.all_images_components[0][1],self.all_images_components[0][2] ,self.all_images_components[0][3],self.Gimage1,self.Fourier_comboBox_1.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
         self.Fourier_comboBox_2.currentIndexChanged.connect(
             lambda: f.plot_fourier_component(self.all_images_components[1][0], self.all_images_components[1][1],
                                              self.all_images_components[1][2], self.all_images_components[1][3],
-                                             self.Gimage2, self.Fourier_comboBox_2.currentIndex(), self.region_selecter2.value(), self.region_selecter2.value()))
+                                             self.Gimage2, self.Fourier_comboBox_2.currentIndex(), self.region_selecter.value(), self.region_selecter.value()))
         self.Fourier_comboBox_3.currentIndexChanged.connect(
             lambda: f.plot_fourier_component(self.all_images_components[2][0], self.all_images_components[2][1],
                                              self.all_images_components[2][2], self.all_images_components[2][3],
-                                             self.Gimage3, self.Fourier_comboBox_3.currentIndex(), self.region_selecter3.value(),self.region_selecter3.value()))
+                                             self.Gimage3, self.Fourier_comboBox_3.currentIndex(), self.region_selecter.value(),self.region_selecter.value()))
         self.Fourier_comboBox_4.currentIndexChanged.connect(
             lambda: f.plot_fourier_component(self.all_images_components[3][0], self.all_images_components[3][1],
                                              self.all_images_components[3][2], self.all_images_components[3][3],
-                                             self.Gimage4, self.Fourier_comboBox_4.currentIndex(), self.region_selecter4.value(), self.region_selecter4.value()))
+                                             self.Gimage4, self.Fourier_comboBox_4.currentIndex(), self.region_selecter.value(), self.region_selecter.value()))
 
-        self.region_selecter1.valueChanged.connect(lambda:f.plot_fourier_component(self.all_images_components[0][0], self.all_images_components[0][1],self.all_images_components[0][2] ,self.all_images_components[0][3],self.Gimage1,self.Fourier_comboBox_1.currentIndex(),self.region_selecter1.value(),self.region_selecter1.value()))
-        self.region_selecter2.valueChanged.connect(
-            lambda: f.plot_fourier_component(self.all_images_components[1][0], self.all_images_components[1][1],
-                                             self.all_images_components[1][2], self.all_images_components[1][3],
-                                             self.Gimage2, self.Fourier_comboBox_2.currentIndex(),
-                                             self.region_selecter2.value(), self.region_selecter2.value()))
-        self.region_selecter3.valueChanged.connect( lambda: f.plot_fourier_component(self.all_images_components[2][0], self.all_images_components[2][1],
-                                             self.all_images_components[2][2], self.all_images_components[2][3],
-                                             self.Gimage3, self.Fourier_comboBox_3.currentIndex(), self.region_selecter3.value(),self.region_selecter3.value()))
-        self.region_selecter4.valueChanged.connect( lambda: f.plot_fourier_component(self.all_images_components[3][0], self.all_images_components[3][1],
-                                             self.all_images_components[3][2], self.all_images_components[3][3],
-                                             self.Gimage4, self.Fourier_comboBox_4.currentIndex(), self.region_selecter4.value(), self.region_selecter4.value()))
+        self.region_selecter.valueChanged.connect(self.apply_region)
+
     # Functions
+    def apply_region(self,value):
+            try:
+                f.plot_fourier_component(
+                    self.all_images_components[0][0],
+                    self.all_images_components[0][1],
+                    self.all_images_components[0][2],
+                    self.all_images_components[0][3],
+                    self.Gimage1,
+                    self.Fourier_comboBox_1.currentIndex(),
+                    value,
+                    value
+                )
+            except Exception as e:
+                print(f"Error in apply_region (index 0): {e}")
+
+            try:
+                f.plot_fourier_component(
+                    self.all_images_components[1][0],
+                    self.all_images_components[1][1],
+                    self.all_images_components[1][2],
+                    self.all_images_components[1][3],
+                    self.Gimage2,
+                    self.Fourier_comboBox_2.currentIndex(),
+                    value,
+                    value
+                )
+            except Exception as e:
+                print(f"Error in apply_region (index 1): {e}")
+
+            try:
+                f.plot_fourier_component(
+                    self.all_images_components[2][0],
+                    self.all_images_components[2][1],
+                    self.all_images_components[2][2],
+                    self.all_images_components[2][3],
+                    self.Gimage3,
+                    self.Fourier_comboBox_3.currentIndex(),
+                    value,
+                    value
+                )
+            except Exception as e:
+                print(f"Error in apply_region (index 2): {e}")
+
+            try:
+                f.plot_fourier_component(
+                    self.all_images_components[3][0],
+                    self.all_images_components[3][1],
+                    self.all_images_components[3][2],
+                    self.all_images_components[3][3],
+                    self.Gimage4,
+                    self.Fourier_comboBox_4.currentIndex(),
+                    value,
+                    value
+                )
+            except Exception as e:
+                print(f"Error in apply_region (index 3): {e}")
+
     def double_click_event_handler(self, event, label,fourier_label):
         try:
             if event.button() == Qt.LeftButton:

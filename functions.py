@@ -13,30 +13,6 @@ from PyQt5.QtGui import QImage, QPixmap, QPainter, QBrush, QColor
 from PyQt5.QtCore import Qt, QRectF, QPointF
 from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsPixmapItem, QGraphicsScene, QGraphicsView, QGraphicsSceneMouseEvent
 
-def clear(frame):
-    layout = frame.layout()
-    if layout is not None:
-        while layout.count():
-            item = layout.takeAt(0)
-            widget = item.widget()
-            if widget is not None:
-                widget.deleteLater()
-
-def create_images(image_num, frame):
-    clear(frame)
-    images_list = []
-
-    layout = frame.layout()
-
-    for i in range(image_num):
-        image = QClickableLabel(f"lol{i}")
-        images_list.append(image)
-        
-        layout.addWidget(image)
-
-    frame.setLayout(layout)
-    return images_list
-
 def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_spectrum ,label, index,width=0,heigth=0):
     try:
                 if index == 0:
@@ -46,7 +22,7 @@ def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_
                     scene.addItem(q_pixmap)
                     label.setScene(scene)
                     label.fitInView(q_pixmap, Qt.KeepAspectRatio)
-                    addResizableRectangle(scene,q_img,width,heigth)
+                    addResizableRectangle(scene,q_img,real_part,width,heigth)
                     # label.setPixmap(q_img)
                     # label.setScaledContents(True)
                     # label.setWindowTitle('Real Part')
@@ -57,7 +33,7 @@ def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_
                     scene.addItem(q_pixmap)
                     label.setScene(scene)
                     label.fitInView(q_pixmap, Qt.KeepAspectRatio)
-                    addResizableRectangle(scene, q_img,width,heigth)
+                    addResizableRectangle(scene, q_img,imaginary_part,width,heigth)
                     # label.setPixmap(q_img)
                     # label.setScaledContents(True)
                     # label.setWindowTitle('Imaginary Part')
@@ -68,7 +44,7 @@ def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_
                     scene.addItem(q_pixmap)
                     label.setScene(scene)
                     label.fitInView(q_pixmap, Qt.KeepAspectRatio)
-                    addResizableRectangle(scene, q_img,width,heigth)
+                    addResizableRectangle(scene, q_img,phase_spectrum,width,heigth)
                     # label.setPixmap(q_img)
                     # label.setScaledContents(True)
                     # label.setWindowTitle('Phase Spectrum')
@@ -89,7 +65,7 @@ def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_
                     scene.addItem(q_pixmap)
                     label.setScene(scene)
                     label.fitInView(q_pixmap, Qt.KeepAspectRatio)
-                    addResizableRectangle(scene, q_img,width,heigth)
+                    addResizableRectangle(scene, q_img,magnitude_spectrum,width,heigth)
                     # label.setPixmap(q_img)
                     # label.setScaledContents(True)
                     # label.setWindowTitle('Magnitude Spectrum')
@@ -109,11 +85,39 @@ def convert_component_to_qimage(component):
 
     # Return the QImage object
     return q_image
-def addResizableRectangle(scene,image_component,width,heigth):
+def addResizableRectangle(scene,image_component,image_component_array,width,heigth):
     rect_item = QGraphicsRectItem(0, 0, width, heigth)
     rect_item.setPen(QPen(Qt.yellow))  # Set pen color to yellow
     brush = QBrush(QColor(255, 255, 0, 50))
     rect_item.setBrush(brush)
     rect_item.setPos((image_component.width() - rect_item.rect().width()) / 2,(image_component.height() - rect_item.rect().height()) / 2)
     scene.addItem(rect_item)
+    ExtractRegion(rect_item,image_component,image_component_array)
+
+def ExtractRegion(rect_item,image_component,image_component_array):
+    image_component=QGraphicsPixmapItem(QPixmap.fromImage(image_component))
+
+
+    # Get the rectangle's position and size in scene coordinates
+    rect_scene_pos = rect_item.scenePos()
+    rect_scene_rect = rect_item.rect()
+
+        # Convert rectangle position and size to image coordinates
+    rect_image_pos = image_component.mapFromScene(rect_scene_pos)
+    rect_image_rect =image_component.mapFromScene(rect_scene_rect).boundingRect()
+
+        # Create a mask with zeros everywhere except in the rectangle region
+        # if self.insideButton.isChecked():
+    mask = np.zeros_like(image_component_array)
+    mask[int(rect_image_pos.y()):int(rect_image_pos.y() + rect_image_rect.height()),
+    int(rect_image_pos.x()):int(rect_image_pos.x() + rect_image_rect.width())] = 1
+        # else:
+        #     self.mask = np.ones_like(self.fourier_shift)
+        #     self.mask[int(rect_image_pos.y()):int(rect_image_pos.y() + rect_image_rect.height()),
+        #     int(rect_image_pos.x()):int(rect_image_pos.x() + rect_image_rect.width())] = 0
+
+    image_component_array = image_component_array * mask
+    print(image_component_array)
+
+
 
