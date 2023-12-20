@@ -25,6 +25,7 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.filters = "Images (*.png *.jpg *.bmp)"
         self.components=[]
         self.all_images_components=[]
+        self.images_list=[]
 
         # Signals
         self.image1.mouseDoubleClickEvent = lambda event: self.double_click_event_handler(event, self.image1,self.Gimage1)
@@ -87,6 +88,7 @@ class MainApp(QMainWindow, FORM_CLASS):
             image = Image(file_path, width=218, height=116)  # Set width and height accordingly
             image.set_image(label)
             self.current_image_path=file_path
+            self.images_list.append(image)
 
             # Perform Fourier transform asynchronously
             self.load_fourier_component(image,fourier_label)
@@ -123,14 +125,19 @@ class MainApp(QMainWindow, FORM_CLASS):
                 normalized_factor = mouse_x / width
                 factor_range = 2.0  # Adjust the range as needed
                 brightness_factor = normalized_factor * factor_range
-
-                # Check if self.current_image_path is defined before using it
-                if hasattr(self, 'current_image_path') and self.current_image_path:
-                    image = Image(self.current_image_path, width=277, height=112)
-                    # Adjust brightness
+                if label== self.image1:
+                    image=self.images_list[0]
                     image.adjust_brightness(brightness_factor, label)
-                else:
-                    print("Error in on_label_mouse_move: current_image_path is not defined.")
+                if label == self.image2:
+                    image = self.images_list[1]
+                    image.adjust_brightness(brightness_factor, label)
+                if label == self.image3:
+                    image = self.images_list[2]
+                    image.adjust_brightness(brightness_factor, label)
+                if label == self.image4:
+                        image = self.images_list[3]
+                        image.adjust_brightness(brightness_factor, label)
+
         except Exception as e:
             print(f"Error in on_label_mouse_move: {e}")
     def closeEvent(self, event):
