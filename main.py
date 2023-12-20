@@ -7,6 +7,13 @@ import functions as f
 import numpy as np
 import cv2
 from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QGraphicsScene, QGraphicsPixmapItem, QGraphicsRectItem
+from PyQt5.QtGui import QPen, QBrush
+from PyQt5.QtCore import QRectF
+from PyQt5.QtGui import QPainterPath
+from PyQt5.QtGui import QImage, QPixmap, QPainter, QBrush, QColor
+from PyQt5.QtCore import Qt, QRectF, QPointF
+from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsPixmapItem, QGraphicsScene, QGraphicsView, QGraphicsSceneMouseEvent
 
 from PyQt5.uic import loadUiType
 
@@ -80,9 +87,6 @@ class MainApp(QMainWindow, FORM_CLASS):
                                                    options=options)
 
         if file_path:
-            # Store file name
-            file_name = file_path.split('/')[-1]
-            label.setText(file_name)
 
             # Load images asynchronously
             image = Image(file_path, width=218, height=116)  # Set width and height accordingly

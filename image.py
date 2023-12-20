@@ -3,7 +3,13 @@ import cv2
 from matplotlib import pylab
 import numpy as np
 import matplotlib as plt
-from PIL import Image as PILImage
+from PyQt5.QtWidgets import QGraphicsScene, QGraphicsPixmapItem, QGraphicsRectItem
+from PyQt5.QtGui import QPen, QBrush
+from PyQt5.QtCore import QRectF
+from PyQt5.QtGui import QPainterPath
+from PyQt5.QtGui import QImage, QPixmap, QPainter, QBrush, QColor
+from PyQt5.QtCore import Qt, QRectF, QPointF
+from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsPixmapItem, QGraphicsScene, QGraphicsView, QGraphicsSceneMouseEvent
 
 class Image:
 
@@ -26,15 +32,20 @@ class Image:
             return None
 
 
-    def set_image(self, image_label):
+    def set_image(self, label):
         image = self.read_image()
 
         if image is not None:
             try:
                 q_image = self.convert_image_to_qimage(image)
-                q_image_resized = q_image.scaled(image_label.size())
-                image_label.setPixmap(QPixmap.fromImage(q_image_resized))
-                image_label.setFixedSize(image_label.size())
+                q_pixmap = QGraphicsPixmapItem(QPixmap.fromImage(q_image))
+                scene = QGraphicsScene()
+                scene.addItem(q_pixmap)
+                label.setScene(scene)
+                label.fitInView(q_pixmap, Qt.KeepAspectRatio)
+                # q_image_resized = q_image.scaled(image_label.size())
+                # image_label.setPixmap(QPixmap.fromImage(q_image_resized))
+                # image_label.setFixedSize(image_label.size())
             except Exception as e:
                 print(f"Error in set_image: {e}")
 
@@ -65,7 +76,7 @@ class Image:
                 print(f"Error in calculate_img_magnitude_phase: {e}")
                 return None, None, None, None
 
-    def adjust_brightness(self, factor, image_label):
+    def adjust_brightness(self, factor, label):
         image = self.read_image()
         try:
                 adjusted_image = self.adjust_brightness_opencv(image, factor)
@@ -75,8 +86,11 @@ class Image:
                     q_image = self.convert_image_to_qimage(adjusted_image)
 
                     # Display the adjusted image in the label
-                    image_label.setPixmap(QPixmap.fromImage(q_image))
-                    image_label.setFixedSize(image_label.size())
+                    q_pixmap = QGraphicsPixmapItem(QPixmap.fromImage(q_image))
+                    scene = QGraphicsScene()
+                    scene.addItem(q_pixmap)
+                    label.setScene(scene)
+                    label.fitInView(q_pixmap, Qt.KeepAspectRatio)
 
         except Exception as e:
                 print(f"Error adjusting brightness: {e}")

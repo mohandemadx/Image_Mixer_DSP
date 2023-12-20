@@ -5,6 +5,13 @@ import numpy as np
 import image
 from PyQt5.QtGui import QPixmap, QImage
 import cv2
+from PyQt5.QtWidgets import QGraphicsScene, QGraphicsPixmapItem, QGraphicsRectItem
+from PyQt5.QtGui import QPen, QBrush
+from PyQt5.QtCore import QRectF
+from PyQt5.QtGui import QPainterPath
+from PyQt5.QtGui import QImage, QPixmap, QPainter, QBrush, QColor
+from PyQt5.QtCore import Qt, QRectF, QPointF
+from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsPixmapItem, QGraphicsScene, QGraphicsView, QGraphicsSceneMouseEvent
 
 def clear(frame):
     layout = frame.layout()
@@ -31,36 +38,55 @@ def create_images(image_num, frame):
     return images_list
 
 def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_spectrum ,label, index):
-    if index == 0:
-        q_img =convert_component_to_qimage(real_part)
-        label.setPixmap(q_img)
-        label.setScaledContents(True)
-        label.setWindowTitle('Real Part')
-    elif index == 1:
-        q_img = convert_component_to_qimage(imaginary_part)
-        label.setPixmap(q_img)
-        label.setScaledContents(True)
-        label.setWindowTitle('Imaginary Part')
-    elif index == 2:
-        q_img = convert_component_to_qimage(phase_spectrum)
-        label.setPixmap(q_img)
-        label.setScaledContents(True)
-        label.setWindowTitle('Phase Spectrum')
-    else:
-        # Ensure magnitude_spectrum is not modified in-place
-        magnitude_spectrum = np.log1p(np.clip(magnitude_spectrum, 0, None).copy())
+    try:
+                if index == 0:
+                    q_img =convert_component_to_qimage(real_part)
+                    scene = QGraphicsScene()
+                    scene.addItem(q_img)
+                    label.setScene(scene)
+                    label.fitInView(q_img, Qt.KeepAspectRatio)
+                    # label.setPixmap(q_img)
+                    # label.setScaledContents(True)
+                    # label.setWindowTitle('Real Part')
+                elif index == 1:
+                    q_img = convert_component_to_qimage(imaginary_part)
+                    scene = QGraphicsScene()
+                    scene.addItem(q_img)
+                    label.setScene(scene)
+                    label.fitInView(q_img, Qt.KeepAspectRatio)
+                    # label.setPixmap(q_img)
+                    # label.setScaledContents(True)
+                    # label.setWindowTitle('Imaginary Part')
+                elif index == 2:
+                    q_img = convert_component_to_qimage(phase_spectrum)
+                    scene = QGraphicsScene()
+                    scene.addItem(q_img)
+                    label.setScene(scene)
+                    label.fitInView(q_img, Qt.KeepAspectRatio)
+                    # label.setPixmap(q_img)
+                    # label.setScaledContents(True)
+                    # label.setWindowTitle('Phase Spectrum')
 
-        # Check for NaN values and replace with a default value
-        if np.isnan(np.sum(magnitude_spectrum)):
-            print("Warning: Invalid values encountered in magnitude_spectrum. Replacing with zeros.")
-            magnitude_spectrum = np.zeros_like(magnitude_spectrum)
+                else:
+                    # Ensure magnitude_spectrum is not modified in-place
+                    magnitude_spectrum = np.log1p(np.clip(magnitude_spectrum, 0, None).copy())
 
-            # Convert NumPy array to QPixmap for display
-        q_img = convert_component_to_qimage(magnitude_spectrum)
-        label.setPixmap(q_img)
-        label.setScaledContents(True)
-        label.setWindowTitle('Magnitude Spectrum')
+                    # Check for NaN values and replace with a default value
+                    if np.isnan(np.sum(magnitude_spectrum)):
+                        print("Warning: Invalid values encountered in magnitude_spectrum. Replacing with zeros.")
+                        magnitude_spectrum = np.zeros_like(magnitude_spectrum)
 
+                        # Convert NumPy array to QPixmap for display
+                    q_img = convert_component_to_qimage(magnitude_spectrum)
+                    scene = QGraphicsScene()
+                    scene.addItem(q_img)
+                    label.setScene(scene)
+                    label.fitInView(q_img, Qt.KeepAspectRatio)
+                    # label.setPixmap(q_img)
+                    # label.setScaledContents(True)
+                    # label.setWindowTitle('Magnitude Spectrum')
+    except Exception as e:
+        print(f"Error in displaying image: {e}")
 def convert_component_to_qimage(component):
     # Normalize the component values to the range [0, 255] and convert to uint8
     component = (component / np.max(component) * 255).astype(np.uint8)
@@ -70,7 +96,7 @@ def convert_component_to_qimage(component):
 
     # Create a QImage from the component data
     q_image = QImage(component.data.tobytes(), width, height, bytes_per_line, QImage.Format_Grayscale8)
-    q_pixmap = QPixmap.fromImage(q_image)
+    q_pixmap = QGraphicsPixmapItem(QPixmap.fromImage(q_image))
     #     return q_pixmap
 
     # Return the QImage object
