@@ -12,7 +12,7 @@ from PyQt5.uic import loadUiType
 
 FORM_CLASS, _ = loadUiType(path.join(path.dirname(__file__), "untitled.ui"))
 
-
+p
 class MainApp(QMainWindow, FORM_CLASS):
     def __init__(self, parent=None):
         super(MainApp, self).__init__(parent)
