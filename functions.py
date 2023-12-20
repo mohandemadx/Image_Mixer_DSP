@@ -37,32 +37,38 @@ def create_images(image_num, frame):
     frame.setLayout(layout)
     return images_list
 
-def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_spectrum ,label, index):
+def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_spectrum ,label, index,width=0,heigth=0):
     try:
                 if index == 0:
                     q_img =convert_component_to_qimage(real_part)
+                    q_pixmap = QGraphicsPixmapItem(QPixmap.fromImage(q_img))
                     scene = QGraphicsScene()
-                    scene.addItem(q_img)
+                    scene.addItem(q_pixmap)
                     label.setScene(scene)
-                    label.fitInView(q_img, Qt.KeepAspectRatio)
+                    label.fitInView(q_pixmap, Qt.KeepAspectRatio)
+                    addResizableRectangle(scene,q_img,width,heigth)
                     # label.setPixmap(q_img)
                     # label.setScaledContents(True)
                     # label.setWindowTitle('Real Part')
                 elif index == 1:
                     q_img = convert_component_to_qimage(imaginary_part)
+                    q_pixmap = QGraphicsPixmapItem(QPixmap.fromImage(q_img))
                     scene = QGraphicsScene()
-                    scene.addItem(q_img)
+                    scene.addItem(q_pixmap)
                     label.setScene(scene)
-                    label.fitInView(q_img, Qt.KeepAspectRatio)
+                    label.fitInView(q_pixmap, Qt.KeepAspectRatio)
+                    addResizableRectangle(scene, q_img,width,heigth)
                     # label.setPixmap(q_img)
                     # label.setScaledContents(True)
                     # label.setWindowTitle('Imaginary Part')
                 elif index == 2:
                     q_img = convert_component_to_qimage(phase_spectrum)
+                    q_pixmap = QGraphicsPixmapItem(QPixmap.fromImage(q_img))
                     scene = QGraphicsScene()
-                    scene.addItem(q_img)
+                    scene.addItem(q_pixmap)
                     label.setScene(scene)
-                    label.fitInView(q_img, Qt.KeepAspectRatio)
+                    label.fitInView(q_pixmap, Qt.KeepAspectRatio)
+                    addResizableRectangle(scene, q_img,width,heigth)
                     # label.setPixmap(q_img)
                     # label.setScaledContents(True)
                     # label.setWindowTitle('Phase Spectrum')
@@ -78,10 +84,12 @@ def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_
 
                         # Convert NumPy array to QPixmap for display
                     q_img = convert_component_to_qimage(magnitude_spectrum)
+                    q_pixmap = QGraphicsPixmapItem(QPixmap.fromImage(q_img))
                     scene = QGraphicsScene()
-                    scene.addItem(q_img)
+                    scene.addItem(q_pixmap)
                     label.setScene(scene)
-                    label.fitInView(q_img, Qt.KeepAspectRatio)
+                    label.fitInView(q_pixmap, Qt.KeepAspectRatio)
+                    addResizableRectangle(scene, q_img,width,heigth)
                     # label.setPixmap(q_img)
                     # label.setScaledContents(True)
                     # label.setWindowTitle('Magnitude Spectrum')
@@ -96,9 +104,16 @@ def convert_component_to_qimage(component):
 
     # Create a QImage from the component data
     q_image = QImage(component.data.tobytes(), width, height, bytes_per_line, QImage.Format_Grayscale8)
-    q_pixmap = QGraphicsPixmapItem(QPixmap.fromImage(q_image))
+
     #     return q_pixmap
 
     # Return the QImage object
-    return q_pixmap
+    return q_image
+def addResizableRectangle(scene,image_component,width,heigth):
+    rect_item = QGraphicsRectItem(0, 0, width, heigth)
+    rect_item.setPen(QPen(Qt.yellow))  # Set pen color to yellow
+    brush = QBrush(QColor(255, 255, 0, 50))
+    rect_item.setBrush(brush)
+    rect_item.setPos((image_component.width() - rect_item.rect().width()) / 2,(image_component.height() - rect_item.rect().height()) / 2)
+    scene.addItem(rect_item)
 
