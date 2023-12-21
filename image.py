@@ -17,7 +17,9 @@ class Image:
         self.image_path = image_path
         self.width = width
         self.height = height
-        self.image = self.read_image
+        self.image = self.read_image()
+        self.components = self.calculate_img_magnitude_phase(self.image)
+
 
 
 
@@ -70,8 +72,9 @@ class Image:
                 imaginary_part = np.imag(f_transform_shifted)
                 magnitude_spectrum = np.abs(f_transform_shifted)
                 phase_spectrum = np.angle(f_transform_shifted)
+                components=[real_part,imaginary_part,magnitude_spectrum,phase_spectrum]
 
-                return real_part, imaginary_part, magnitude_spectrum, phase_spectrum
+                return components
             except Exception as e:
                 print(f"Error in calculate_img_magnitude_phase: {e}")
                 return None, None, None, None

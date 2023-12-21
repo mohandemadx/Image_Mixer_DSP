@@ -33,6 +33,12 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.components=[]
         self.all_images_components=[]
         self.images_list=[]
+        self.image_dict = {
+            self.image1: None,
+            self.image2: None,
+            self.image3: None,
+            self.image4: None
+        }
 
         # Signals
         self.image1.mouseDoubleClickEvent = lambda event: self.double_click_event_handler(event, self.image1,self.Gimage1)
@@ -52,44 +58,26 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.image4.setMouseTracking(True)
         self.image4.mouseMoveEvent = lambda event: self.on_label_mouse_move(event, self.image4)
 
-        self.Fourier_comboBox_1.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.all_images_components[0][0], self.all_images_components[0][1],self.all_images_components[0][2] ,self.all_images_components[0][3],self.Gimage1,self.Fourier_comboBox_1.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
-        self.Fourier_comboBox_2.currentIndexChanged.connect(
-            lambda: f.plot_fourier_component(self.all_images_components[1][0], self.all_images_components[1][1],
-                                             self.all_images_components[1][2], self.all_images_components[1][3],
-                                             self.Gimage2, self.Fourier_comboBox_2.currentIndex(), self.region_selecter.value(), self.region_selecter.value()))
-        self.Fourier_comboBox_3.currentIndexChanged.connect(
-            lambda: f.plot_fourier_component(self.all_images_components[2][0], self.all_images_components[2][1],
-                                             self.all_images_components[2][2], self.all_images_components[2][3],
-                                             self.Gimage3, self.Fourier_comboBox_3.currentIndex(), self.region_selecter.value(),self.region_selecter.value()))
-        self.Fourier_comboBox_4.currentIndexChanged.connect(
-            lambda: f.plot_fourier_component(self.all_images_components[3][0], self.all_images_components[3][1],
-                                             self.all_images_components[3][2], self.all_images_components[3][3],
-                                             self.Gimage4, self.Fourier_comboBox_4.currentIndex(), self.region_selecter.value(), self.region_selecter.value()))
+        self.Fourier_comboBox_1.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.image_dict[self.image1].components[0],self.image_dict[self.image1].components[1] ,self.image_dict[self.image1].components[2],self.image_dict[self.image1].components[3],self.Gimage1,self.Fourier_comboBox_1.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
+        self.Fourier_comboBox_2.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.image_dict[self.image2].components[0],self.image_dict[self.image2].components[1] ,self.image_dict[self.image2].components[2],self.image_dict[self.image2].components[3],self.Gimage2,self.Fourier_comboBox_2.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
+        self.Fourier_comboBox_3.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.image_dict[self.image3].components[0],self.image_dict[self.image3].components[1] ,self.image_dict[self.image3].components[2],self.image_dict[self.image3].components[3],self.Gimage3,self.Fourier_comboBox_3.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
+        self.Fourier_comboBox_4.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.image_dict[self.image4].components[0],self.image_dict[self.image4].components[1] ,self.image_dict[self.image4].components[2],self.image_dict[self.image4].components[3],self.Gimage4,self.Fourier_comboBox_4.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
 
         self.region_selecter.valueChanged.connect(self.apply_region)
 
     # Functions
     def apply_region(self,value):
             try:
-                f.plot_fourier_component(
-                    self.all_images_components[0][0],
-                    self.all_images_components[0][1],
-                    self.all_images_components[0][2],
-                    self.all_images_components[0][3],
-                    self.Gimage1,
-                    self.Fourier_comboBox_1.currentIndex(),
-                    value,
-                    value
-                )
+                f.plot_fourier_component(self.image_dict[self.image1].components[0],self.image_dict[self.image1].components[1] ,self.image_dict[self.image1].components[2],self.image_dict[self.image1].components[3],self.Gimage1,self.Fourier_comboBox_1.currentIndex(),value,value)
             except Exception as e:
                 print(f"Error in apply_region (index 0): {e}")
 
             try:
                 f.plot_fourier_component(
-                    self.all_images_components[1][0],
-                    self.all_images_components[1][1],
-                    self.all_images_components[1][2],
-                    self.all_images_components[1][3],
+                    self.image_dict[self.image2].components[0],
+                    self.image_dict[self.image2].components[1],
+                    self.image_dict[self.image2].components[2],
+                    self.image_dict[self.image2].components[3],
                     self.Gimage2,
                     self.Fourier_comboBox_2.currentIndex(),
                     value,
@@ -100,10 +88,10 @@ class MainApp(QMainWindow, FORM_CLASS):
 
             try:
                 f.plot_fourier_component(
-                    self.all_images_components[2][0],
-                    self.all_images_components[2][1],
-                    self.all_images_components[2][2],
-                    self.all_images_components[2][3],
+                    self.image_dict[self.image3].components[0],
+                    self.image_dict[self.image3].components[1],
+                    self.image_dict[self.image3].components[2],
+                    self.image_dict[self.image3].components[3],
                     self.Gimage3,
                     self.Fourier_comboBox_3.currentIndex(),
                     value,
@@ -114,10 +102,10 @@ class MainApp(QMainWindow, FORM_CLASS):
 
             try:
                 f.plot_fourier_component(
-                    self.all_images_components[3][0],
-                    self.all_images_components[3][1],
-                    self.all_images_components[3][2],
-                    self.all_images_components[3][3],
+                    self.image_dict[self.image4].components[0],
+                    self.image_dict[self.image4].components[1],
+                    self.image_dict[self.image4].components[2],
+                    self.image_dict[self.image4].components[3],
                     self.Gimage4,
                     self.Fourier_comboBox_4.currentIndex(),
                     value,
@@ -145,32 +133,21 @@ class MainApp(QMainWindow, FORM_CLASS):
         if file_path:
 
             # Load images asynchronously
-            image = Image(file_path, width=218, height=116)  # Set width and height accordingly
+            image = Image(file_path, width=218, height=116)
             image.set_image(label)
             self.current_image_path=file_path
-            self.images_list.append(image)
+            self.image_dict[label]=image
+            #self.images_list.append(image)
 
             # Perform Fourier transform asynchronously
             self.load_fourier_component(image,fourier_label)
 
+
+
     def load_fourier_component(self, image,fourier_label):
         try:
-            image_for_fourier = image.read_image()
-            self.real_part, self.imaginary_part, self.magnitude_spectrum, self.phase_spectrum = image.calculate_img_magnitude_phase(
-                image_for_fourier)
-            components=[self.real_part,self.imaginary_part,self.magnitude_spectrum,self.phase_spectrum]
-
-            if fourier_label == self.Gimage1:
-                self.all_images_components.insert(0, components)
-            elif fourier_label == self.Gimage2:
-                self.all_images_components.insert(1, components)
-            elif fourier_label == self.Gimage3:
-                self.all_images_components.insert(2, components)
-            elif fourier_label == self.Gimage4:
-                self.all_images_components.insert(3, components)
-            else:
-                print(f"Unsupported Fourier label: {fourier_label}")
-            f.plot_fourier_component(self.magnitude_spectrum, self.real_part, self.imaginary_part,self.phase_spectrum,fourier_label,self.Fourier_comboBox_1.currentIndex())
+            components=image.components
+            f.plot_fourier_component(components[0], components[2], components[1],components[3],fourier_label,self.Fourier_comboBox_1.currentIndex())
         except Exception as e:
             print(f"Error loading Fourier component: {e}")
 
@@ -185,18 +162,8 @@ class MainApp(QMainWindow, FORM_CLASS):
                 normalized_factor = mouse_x / width
                 factor_range = 2.0  # Adjust the range as needed
                 brightness_factor = normalized_factor * factor_range
-                if label== self.image1:
-                    image=self.images_list[0]
-                    image.adjust_brightness(brightness_factor, label)
-                if label == self.image2:
-                    image = self.images_list[1]
-                    image.adjust_brightness(brightness_factor, label)
-                if label == self.image3:
-                    image = self.images_list[2]
-                    image.adjust_brightness(brightness_factor, label)
-                if label == self.image4:
-                        image = self.images_list[3]
-                        image.adjust_brightness(brightness_factor, label)
+                image = self.image_dict[label]
+                image.adjust_brightness(brightness_factor, label)
 
         except Exception as e:
             print(f"Error in on_label_mouse_move: {e}")
