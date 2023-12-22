@@ -31,8 +31,9 @@ class MainApp(QMainWindow, FORM_CLASS):
         # Variables
         self.filters = "Images (*.png *.jpg *.bmp)"
         self.components=[]
-        self.all_images_components=[]
-        self.images_list=[]
+        self.sliders_list=[self.weight_1,self.weight_2,self.weight_3,self.weight_4]
+        self.combobox_list=[self.Fourier_comboBox_1,self.Fourier_comboBox_2,self.Fourier_comboBox_3,self.Fourier_comboBox_4]
+        self.components_weights={0:0,1:0,2:0,3:0} #index of combobox and corresponding slider value
         self.image_dict = {
             self.image1: None,
             self.image2: None,
@@ -64,6 +65,8 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.Fourier_comboBox_4.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.image_dict[self.image4].components[0],self.image_dict[self.image4].components[1] ,self.image_dict[self.image4].components[2],self.image_dict[self.image4].components[3],self.Gimage4,self.Fourier_comboBox_4.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
 
         self.region_selecter.valueChanged.connect(self.apply_region)
+        self.apply_mixer.clicked.connect(self.mixer)
+        # self.real_imaginary.toggled.connect(self.components_selection)
 
     # Functions
     def apply_region(self,value):
@@ -167,9 +170,91 @@ class MainApp(QMainWindow, FORM_CLASS):
 
         except Exception as e:
             print(f"Error in on_label_mouse_move: {e}")
+
+
     def closeEvent(self, event):
         # Release resources when the window is closed
         cv2.destroyAllWindows()
+
+    # def mixer(self):
+    #         weights = [slider.value()/100 for slider in self.sliders_list]
+    #         chosen_comp=[combobox.currentIndex() for combobox in self.combobox_list]
+    #
+    #         for i,label in enumerate[self.image1,self.image2,self.image3,self.image4]:
+    #             weighted_sum += self.image_dict[label].components[chosen_comp[i]]*weights[i]
+
+
+    def mixer(self):
+        try:
+            image_keys = [self.image1, self.image2, self.image3, self.image4]
+
+            real_array = [self.image_dict[key].components[0] for key in image_keys]
+            imaginary_array = [self.image_dict[key].components[1] for key in image_keys]
+            phase_array = [self.image_dict[key].components[3] for key in image_keys]
+            magnitudes_array = [self.image_dict[key].components[2] for key in image_keys]
+
+            # Find the maximum shape among the arrays
+            max_shape = max(arr.shape for arr in real_array + imaginary_array + phase_array + magnitudes_array)
+            imaginary_sum = np.zeros(max_shape, dtype=np.float32)
+            real_sum = np.zeros(max_shape, dtype=np.float32)
+            mag_sum = np.zeros(max_shape, dtype=np.float32)
+            phase_sum = np.zeros(max_shape, dtype=np.float32)
+
+            # Resize each array to the maximum shape
+            resized_real_array = [cv2.resize(arr, max_shape[::-1]) for arr in real_array]
+            resized_imaginary_array = [cv2.resize(arr, max_shape[::-1]) for arr in imaginary_array]
+            resized_phase_array = [cv2.resize(arr, max_shape[::-1]) for arr in phase_array]
+            resized_magnitudes_array = [cv2.resize(arr, max_shape[::-1]) for arr in magnitudes_array]
+
+            mag_weights = [
+                slider.value()/100 * np.ones(max_shape, dtype=np.float32) if combobox.currentIndex() == 2 else np.zeros(
+                    max_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
+            phase_weights = [
+                slider.value()/100 * np.ones(max_shape, dtype=np.float32) if combobox.currentIndex() == 3 else np.zeros(
+                    max_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
+            imaginary_weights = [
+                slider.value()/100 * np.ones(max_shape, dtype=np.float32) if combobox.currentIndex() == 1 else np.zeros(
+                    max_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
+            real_weights = [
+                slider.value()/100 * np.ones(max_shape, dtype=np.float32) if combobox.currentIndex() == 0 else np.zeros(
+                    max_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
+            # mag_weights = [slider.value() if combobox.currentIndex() == 2 else 0 for slider, combobox in
+            #                zip(self.sliders_list, self.combobox_list)]
+            # phase_weights = [slider.value() if combobox.currentIndex() == 3 else 0 for slider, combobox in
+            #                  zip(self.sliders_list, self.combobox_list)]
+            # imaginary_weights = [slider.value() if combobox.currentIndex() == 1 else 0 for slider, combobox in
+            #                      zip(self.sliders_list, self.combobox_list)]
+            # real_weights = [slider.value() if combobox.currentIndex() == 0 else 0 for slider, combobox in
+            #                 zip(self.sliders_list, self.combobox_list)]
+
+            # print("Shapes of arrays:")
+            # for i, mag_arr in enumerate(magnitudes_array):
+            #     print(f"magnitudes_array[{i}]:", np.shape(mag_arr))
+            #
+            # print("phase_array:", np.shape(phase_array))
+            # print("imaginary_array:", np.shape(imaginary_array))
+            # print("real_array:", np.shape(real_array))
+            if self.real_imaginary.isChecked():
+                for i in range(4):
+                    imaginary_sum += resized_imaginary_array[i] * imaginary_weights[i]
+                    real_sum += resized_real_array[i] * real_weights[i]
+                mixed_image = np.fft.ifft2(np.fft.ifftshift(real_sum + 1j * imaginary_sum))
+                final_mixed_image=np.abs(mixed_image).astype(np.uint8)
+                f.display_output_image(self.output_mixer1, final_mixed_image)
+
+            elif self.magnitude_phase.isChecked():
+                for i in range(4):
+                    mag_sum += resized_magnitudes_array[i] * mag_weights[i]
+                    phase_sum += resized_phase_array[i] * phase_weights[i]
+                mixed_image = np.fft.ifft2(np.fft.ifftshift(mag_sum * np.exp(1j * phase_sum)))
+                final_mixed_image = np.abs(mixed_image).astype(np.uint8)
+                f.display_output_image(self.output_mixer1, final_mixed_image)
+
+            else:
+                print("Error: No mixing option selected.")
+
+        except Exception as e:
+            print(f"Error during image mixing: {e}")
 
 
 def main():

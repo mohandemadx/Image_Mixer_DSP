@@ -102,21 +102,21 @@
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="real_imaginary1">
+        <widget class="QRadioButton" name="real_imaginary">
          <property name="text">
           <string>Real/Imaginary</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="magnitude_phase1">
+        <widget class="QRadioButton" name="magnitude_phase">
          <property name="text">
           <string>Magnitude/Phase</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="apply_mixer">
          <property name="text">
           <string>Apply Mixer</string>
          </property>
@@ -130,9 +130,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QGraphicsView" name="graphicsView_2">
+        <widget class="QGraphicsView" name="output_mixer1">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -147,9 +147,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QGraphicsView" name="graphicsView">
+        <widget class="QGraphicsView" name="output_mixer2">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -272,7 +272,7 @@
        <item row="13" column="0" colspan="2">
         <widget class="QGraphicsView" name="image2">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -280,7 +280,14 @@
         </widget>
        </item>
        <item row="9" column="0">
-        <widget class="QGraphicsView" name="image1"/>
+        <widget class="QGraphicsView" name="image1">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item row="8" column="2">
         <widget class="QLabel" name="Glabel1">
@@ -300,14 +307,14 @@
         </widget>
        </item>
        <item row="9" column="4">
-        <widget class="QSlider" name="slider1">
+        <widget class="QSlider" name="weight_1">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
        <item row="20" column="4">
-        <widget class="QSlider" name="slider3">
+        <widget class="QSlider" name="weight_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -340,7 +347,7 @@
         </widget>
        </item>
        <item row="13" column="4">
-        <widget class="QSlider" name="slider2">
+        <widget class="QSlider" name="weight_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -357,7 +364,7 @@
         </widget>
        </item>
        <item row="23" column="4">
-        <widget class="QSlider" name="slider4">
+        <widget class="QSlider" name="weight_4">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -366,7 +373,7 @@
        <item row="20" column="0" colspan="2">
         <widget class="QGraphicsView" name="image3">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>

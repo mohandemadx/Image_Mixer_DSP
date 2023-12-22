@@ -23,9 +23,7 @@ def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_
                     label.setScene(scene)
                     label.fitInView(q_pixmap, Qt.KeepAspectRatio)
                     addResizableRectangle(scene,q_img,real_part,width,heigth)
-                    # label.setPixmap(q_img)
-                    # label.setScaledContents(True)
-                    # label.setWindowTitle('Real Part')
+
                 elif index == 1:
                     q_img = convert_component_to_qimage(imaginary_part)
                     q_pixmap = QGraphicsPixmapItem(QPixmap.fromImage(q_img))
@@ -34,9 +32,7 @@ def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_
                     label.setScene(scene)
                     label.fitInView(q_pixmap, Qt.KeepAspectRatio)
                     addResizableRectangle(scene, q_img,imaginary_part,width,heigth)
-                    # label.setPixmap(q_img)
-                    # label.setScaledContents(True)
-                    # label.setWindowTitle('Imaginary Part')
+
                 elif index == 2:
                     q_img = convert_component_to_qimage(phase_spectrum)
                     q_pixmap = QGraphicsPixmapItem(QPixmap.fromImage(q_img))
@@ -45,9 +41,7 @@ def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_
                     label.setScene(scene)
                     label.fitInView(q_pixmap, Qt.KeepAspectRatio)
                     addResizableRectangle(scene, q_img,phase_spectrum,width,heigth)
-                    # label.setPixmap(q_img)
-                    # label.setScaledContents(True)
-                    # label.setWindowTitle('Phase Spectrum')
+
 
                 else:
                     # Ensure magnitude_spectrum is not modified in-place
@@ -66,9 +60,7 @@ def plot_fourier_component(real_part, imaginary_part, magnitude_spectrum, phase_
                     label.setScene(scene)
                     label.fitInView(q_pixmap, Qt.KeepAspectRatio)
                     addResizableRectangle(scene, q_img,magnitude_spectrum,width,heigth)
-                    # label.setPixmap(q_img)
-                    # label.setScaledContents(True)
-                    # label.setWindowTitle('Magnitude Spectrum')
+
     except Exception as e:
         print(f"Error in displaying image: {e}")
 def convert_component_to_qimage(component):
@@ -92,32 +84,46 @@ def addResizableRectangle(scene,image_component,image_component_array,width,heig
     rect_item.setBrush(brush)
     rect_item.setPos((image_component.width() - rect_item.rect().width()) / 2,(image_component.height() - rect_item.rect().height()) / 2)
     scene.addItem(rect_item)
-    ExtractRegion(rect_item,image_component,image_component_array)
+    # ExtractRegion(rect_item,image_component,image_component_array)
+# def adjusted_weights(sliders,comboboxes):
 
-def ExtractRegion(rect_item,image_component,image_component_array):
-    image_component=QGraphicsPixmapItem(QPixmap.fromImage(image_component))
+# def ExtractRegion(rect_item,image_component,image_component_array):
+#     image_component=QGraphicsPixmapItem(QPixmap.fromImage(image_component))
+#
+#
+#     # Get the rectangle's position and size in scene coordinates
+#     rect_scene_pos = rect_item.scenePos()
+#     rect_scene_rect = rect_item.rect()
+#
+#         # Convert rectangle position and size to image coordinates
+#     rect_image_pos = image_component.mapFromScene(rect_scene_pos)
+#     rect_image_rect =image_component.mapFromScene(rect_scene_rect).boundingRect()
+#
+#         # Create a mask with zeros everywhere except in the rectangle region
+#         # if self.insideButton.isChecked():
+#     mask = np.zeros_like(image_component_array)
+#     mask[int(rect_image_pos.y()):int(rect_image_pos.y() + rect_image_rect.height()),
+#     int(rect_image_pos.x()):int(rect_image_pos.x() + rect_image_rect.width())] = 1
+#         # else:
+#         #     self.mask = np.ones_like(self.fourier_shift)
+#         #     self.mask[int(rect_image_pos.y()):int(rect_image_pos.y() + rect_image_rect.height()),
+#         #     int(rect_image_pos.x()):int(rect_image_pos.x() + rect_image_rect.width())] = 0
+#
+#     image_component_array = image_component_array * mask
+#     print(image_component_array)
+def display_output_image(label,mixed_image):
 
+            # Convert NumPy array to QImage
+            height, width = mixed_image.shape
+            bytes_per_line = width
+            q_image = QImage(mixed_image.data.tobytes(), width, height, bytes_per_line, QImage.Format_Grayscale8)
 
-    # Get the rectangle's position and size in scene coordinates
-    rect_scene_pos = rect_item.scenePos()
-    rect_scene_rect = rect_item.rect()
+            # Display the mixed image in the QGraphicsView
+            scene = QGraphicsScene()
+            pixmap_item = QGraphicsPixmapItem(QPixmap.fromImage(q_image))
+            scene.addItem(pixmap_item)
 
-        # Convert rectangle position and size to image coordinates
-    rect_image_pos = image_component.mapFromScene(rect_scene_pos)
-    rect_image_rect =image_component.mapFromScene(rect_scene_rect).boundingRect()
-
-        # Create a mask with zeros everywhere except in the rectangle region
-        # if self.insideButton.isChecked():
-    mask = np.zeros_like(image_component_array)
-    mask[int(rect_image_pos.y()):int(rect_image_pos.y() + rect_image_rect.height()),
-    int(rect_image_pos.x()):int(rect_image_pos.x() + rect_image_rect.width())] = 1
-        # else:
-        #     self.mask = np.ones_like(self.fourier_shift)
-        #     self.mask[int(rect_image_pos.y()):int(rect_image_pos.y() + rect_image_rect.height()),
-        #     int(rect_image_pos.x()):int(rect_image_pos.x() + rect_image_rect.width())] = 0
-
-    image_component_array = image_component_array * mask
-    print(image_component_array)
-
+            label.setScene(scene)
+            label.fitInView(pixmap_item, Qt.KeepAspectRatio)
 
 
