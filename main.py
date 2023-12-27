@@ -31,7 +31,7 @@ class MainApp(QMainWindow, FORM_CLASS):
 
         # Variables
         self.filters = "Images (*.png *.jpg *.bmp)"
-        self.components=[]
+        self.components =[]
         self.sliders_list=[self.weight_1,self.weight_2,self.weight_3,self.weight_4]
         self.combobox_list=[self.Fourier_comboBox_1,self.Fourier_comboBox_2,self.Fourier_comboBox_3,self.Fourier_comboBox_4]
         self.image_dict = {
