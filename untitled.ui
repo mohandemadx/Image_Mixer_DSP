@@ -21,24 +21,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="1">
-     <widget class="QLabel" name="label">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Image Mixer</string>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="3">
      <widget class="QFrame" name="frame_3">
       <property name="frameShape">
@@ -74,17 +56,32 @@
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="radioButton">
+        <widget class="QRadioButton" name="in_region_radioButton">
          <property name="text">
           <string>Inner Region</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">region_buttonGroup</string>
+         </attribute>
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="radioButton_2">
+        <widget class="QRadioButton" name="out_region_radioButton">
          <property name="text">
           <string>Outer Region</string>
          </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">region_buttonGroup</string>
+         </attribute>
         </widget>
        </item>
        <item>
@@ -106,6 +103,12 @@
          <property name="text">
           <string>Real/Imaginary</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">components_buttonGroup</string>
+         </attribute>
         </widget>
        </item>
        <item>
@@ -113,97 +116,63 @@
          <property name="text">
           <string>Magnitude/Phase</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="apply_mixer">
-         <property name="text">
-          <string>Apply Mixer</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton1">
-         <property name="text">
-          <string>Output Channel 1</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGraphicsView" name="output_mixer1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton2">
-         <property name="text">
-          <string>Output Channel 2</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGraphicsView" name="output_mixer2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">components_buttonGroup</string>
+         </attribute>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>Mixer Progress Bar:</string>
+          <string>Choose Display Port:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QProgressBar" name="progressBar">
-         <property name="value">
-          <number>24</number>
+        <widget class="QRadioButton" name="output1">
+         <property name="text">
+          <string>Output Channel 1</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">output_buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="output_mixer1">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="output2">
+         <property name="text">
+          <string>Output Channel 2</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">output_buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="output_mixer2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
-    </item>
-    <item row="2" column="4">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="2" column="0">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
     </item>
     <item row="2" column="1">
      <widget class="QFrame" name="imageFrame">
@@ -441,6 +410,56 @@
       </layout>
      </widget>
     </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Image Mixer</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="0">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -459,4 +478,9 @@
   <include location="icons.qrc"/>
  </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="output_buttonGroup"/>
+  <buttongroup name="components_buttonGroup"/>
+  <buttongroup name="region_buttonGroup"/>
+ </buttongroups>
 </ui>

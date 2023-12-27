@@ -45,9 +45,7 @@ class Image:
                 scene.addItem(q_pixmap)
                 label.setScene(scene)
                 label.fitInView(q_pixmap, Qt.KeepAspectRatio)
-                # q_image_resized = q_image.scaled(image_label.size())
-                # image_label.setPixmap(QPixmap.fromImage(q_image_resized))
-                # image_label.setFixedSize(image_label.size())
+
             except Exception as e:
                 print(f"Error in set_image: {e}")
 

@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDesktopWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDesktopWidget, QButtonGroup
 from PyQt5.QtGui import QPixmap, QImage
 from os import path
 from image import Image
@@ -12,7 +12,7 @@ from PyQt5.QtGui import QPen, QBrush
 from PyQt5.QtCore import QRectF
 from PyQt5.QtGui import QPainterPath
 from PyQt5.QtGui import QImage, QPixmap, QPainter, QBrush, QColor
-from PyQt5.QtCore import Qt, QRectF, QPointF
+from PyQt5.QtCore import Qt, QRectF, QPointF, QTimer
 from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsPixmapItem, QGraphicsScene, QGraphicsView, QGraphicsSceneMouseEvent
 
 from PyQt5.uic import loadUiType
@@ -25,6 +25,7 @@ class MainApp(QMainWindow, FORM_CLASS):
         super(MainApp, self).__init__(parent)
         QMainWindow.__init__(self)
 
+        self.timer = None
         self.setupUi(self)
         self.setWindowTitle("Image Mixer")
 
@@ -33,19 +34,31 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.components=[]
         self.sliders_list=[self.weight_1,self.weight_2,self.weight_3,self.weight_4]
         self.combobox_list=[self.Fourier_comboBox_1,self.Fourier_comboBox_2,self.Fourier_comboBox_3,self.Fourier_comboBox_4]
-        self.components_weights={0:0,1:0,2:0,3:0} #index of combobox and corresponding slider value
         self.image_dict = {
             self.image1: None,
             self.image2: None,
             self.image3: None,
             self.image4: None
         }
+        # Intial Settings
+        self.Fourier_comboBox_1.model().item(2).setEnabled(False)
+        self.Fourier_comboBox_2.model().item(2).setEnabled(False)
+        self.Fourier_comboBox_3.model().item(2).setEnabled(False)
+        self.Fourier_comboBox_4.model().item(2).setEnabled(False)
+        self.Fourier_comboBox_1.model().item(3).setEnabled(False)
+        self.Fourier_comboBox_2.model().item(3).setEnabled(False)
+        self.Fourier_comboBox_3.model().item(3).setEnabled(False)
+        self.Fourier_comboBox_4.model().item(3).setEnabled(False)
+        self.region_selecter.setRange(0, 100)
+        self.real_imaginary.isChecked()
+
 
         # Signals
         self.image1.mouseDoubleClickEvent = lambda event: self.double_click_event_handler(event, self.image1,self.Gimage1)
         self.image2.mouseDoubleClickEvent = lambda event: self.double_click_event_handler(event, self.image2,self.Gimage2)
         self.image3.mouseDoubleClickEvent = lambda event: self.double_click_event_handler(event, self.image3,self.Gimage3)
         self.image4.mouseDoubleClickEvent = lambda event: self.double_click_event_handler(event, self.image4,self.Gimage4)
+
 
         self.image1.setMouseTracking(True)
         self.image1.mouseMoveEvent = lambda event: self.on_label_mouse_move(event, self.image1)
@@ -59,24 +72,56 @@ class MainApp(QMainWindow, FORM_CLASS):
         self.image4.setMouseTracking(True)
         self.image4.mouseMoveEvent = lambda event: self.on_label_mouse_move(event, self.image4)
 
+
         self.Fourier_comboBox_1.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.image_dict[self.image1].components[0],self.image_dict[self.image1].components[1] ,self.image_dict[self.image1].components[2],self.image_dict[self.image1].components[3],self.Gimage1,self.Fourier_comboBox_1.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
         self.Fourier_comboBox_2.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.image_dict[self.image2].components[0],self.image_dict[self.image2].components[1] ,self.image_dict[self.image2].components[2],self.image_dict[self.image2].components[3],self.Gimage2,self.Fourier_comboBox_2.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
         self.Fourier_comboBox_3.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.image_dict[self.image3].components[0],self.image_dict[self.image3].components[1] ,self.image_dict[self.image3].components[2],self.image_dict[self.image3].components[3],self.Gimage3,self.Fourier_comboBox_3.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
         self.Fourier_comboBox_4.currentIndexChanged.connect(lambda:f.plot_fourier_component(self.image_dict[self.image4].components[0],self.image_dict[self.image4].components[1] ,self.image_dict[self.image4].components[2],self.image_dict[self.image4].components[3],self.Gimage4,self.Fourier_comboBox_4.currentIndex(),self.region_selecter.value(),self.region_selecter.value()))
-
+        self.Fourier_comboBox_1.currentIndexChanged.connect(lambda:self.apply_region(self.region_selecter.value()))
+        self.Fourier_comboBox_2.currentIndexChanged.connect(lambda:self.apply_region(self.region_selecter.value()))
+        self.Fourier_comboBox_3.currentIndexChanged.connect(lambda:self.apply_region(self.region_selecter.value()))
+        self.Fourier_comboBox_4.currentIndexChanged.connect(lambda:self.apply_region(self.region_selecter.value()))
         self.region_selecter.valueChanged.connect(self.apply_region)
-        self.apply_mixer.clicked.connect(self.mixer)
-        # self.real_imaginary.toggled.connect(self.components_selection)
+        self.in_region_radioButton.toggled.connect(lambda:self.apply_region(self.region_selecter.value()))
+        self.out_region_radioButton.toggled.connect(lambda:self.apply_region(self.region_selecter.value()))
+        self.real_imaginary.clicked.connect(self.update_combo_box)
+        self.magnitude_phase.clicked.connect(self.update_combo_box)
 
-    # Functions
+
+
+        #Handling mixer instantenous changes
+        for slider in self.sliders_list:
+                slider.valueChanged.connect(self.mixer)
+        for combobox in self.combobox_list:
+            combobox.currentIndexChanged.connect(self.mixer)
+        self.region_selecter.valueChanged.connect(self.mixer)
+        self.in_region_radioButton.toggled.connect(self.mixer)
+        self.out_region_radioButton.toggled.connect(self.mixer)
+        self.real_imaginary.clicked.connect(self.mixer)
+        self.magnitude_phase.clicked.connect(self.mixer)
+        self.output1.toggled.connect(self.mixer)
+        self.output2.toggled.connect(self.mixer)
+
+
+
+
+
+
+    #Functions
+
     def apply_region(self,value):
             try:
-                f.plot_fourier_component(self.image_dict[self.image1].components[0],self.image_dict[self.image1].components[1] ,self.image_dict[self.image1].components[2],self.image_dict[self.image1].components[3],self.Gimage1,self.Fourier_comboBox_1.currentIndex(),value,value)
+                scene,q_img,img_comp=f.plot_fourier_component(self.image_dict[self.image1].components[0],self.image_dict[self.image1].components[1] ,self.image_dict[self.image1].components[2],self.image_dict[self.image1].components[3],self.Gimage1,self.Fourier_comboBox_1.currentIndex(),value,value)
+                if self.out_region_radioButton.isChecked() or self.in_region_radioButton.isChecked():
+                    rect_item=f.addResizableRectangle(scene,q_img,value,value,self.in_region_radioButton)
+                    self.masked_img_comp1=f.ExtractRegion(rect_item,q_img,img_comp,self.in_region_radioButton)
+
+
             except Exception as e:
                 print(f"Error in apply_region (index 0): {e}")
 
             try:
-                f.plot_fourier_component(
+                scene2,q_img2,img_comp2=f.plot_fourier_component(
                     self.image_dict[self.image2].components[0],
                     self.image_dict[self.image2].components[1],
                     self.image_dict[self.image2].components[2],
@@ -86,11 +131,15 @@ class MainApp(QMainWindow, FORM_CLASS):
                     value,
                     value
                 )
+                if self.out_region_radioButton.isChecked() or self.in_region_radioButton.isChecked():
+                    rect_item2 = f.addResizableRectangle(scene2, q_img2, value, value, self.in_region_radioButton)
+                    self.masked_img_comp2 = f.ExtractRegion(rect_item2, q_img2, img_comp2, self.in_region_radioButton)
+
             except Exception as e:
                 print(f"Error in apply_region (index 1): {e}")
 
             try:
-                f.plot_fourier_component(
+                scene3, q_img3, img_comp3=f.plot_fourier_component(
                     self.image_dict[self.image3].components[0],
                     self.image_dict[self.image3].components[1],
                     self.image_dict[self.image3].components[2],
@@ -100,11 +149,14 @@ class MainApp(QMainWindow, FORM_CLASS):
                     value,
                     value
                 )
+                if self.out_region_radioButton.isChecked() or self.in_region_radioButton.isChecked():
+                    rect_item3 = f.addResizableRectangle(scene3, q_img3, value, value, self.in_region_radioButton)
+                    self.masked_img_comp3 = f.ExtractRegion(rect_item3, q_img3, img_comp3, self.in_region_radioButton)
             except Exception as e:
                 print(f"Error in apply_region (index 2): {e}")
 
             try:
-                f.plot_fourier_component(
+                scene4, q_img4, img_comp4=f.plot_fourier_component(
                     self.image_dict[self.image4].components[0],
                     self.image_dict[self.image4].components[1],
                     self.image_dict[self.image4].components[2],
@@ -114,8 +166,14 @@ class MainApp(QMainWindow, FORM_CLASS):
                     value,
                     value
                 )
+                if self.out_region_radioButton.isChecked() or self.in_region_radioButton.isChecked():
+                    rect_item4 = f.addResizableRectangle(scene4, q_img4, value, value, self.in_region_radioButton)
+                    self.masked_img_comp4 = f.ExtractRegion(rect_item4, q_img4, img_comp4, self.in_region_radioButton)
+
             except Exception as e:
                 print(f"Error in apply_region (index 3): {e}")
+            self.masked_imgs = [self.masked_img_comp1, self.masked_img_comp2, self.masked_img_comp3,
+                                self.masked_img_comp4]
 
     def double_click_event_handler(self, event, label,fourier_label):
         try:
@@ -124,6 +182,16 @@ class MainApp(QMainWindow, FORM_CLASS):
                 self.upload(label, fourier_label)
         except Exception as e:
             print(f"Error in double_click_event_handler: {e}")
+        try:
+            if event.button() == Qt.RightButton:
+                # Reset brightness to the original value
+                for label in [self.image1, self.image2, self.image3, self.image4]:
+                    image = self.image_dict[label]
+                    if image:
+                        image.adjust_brightness(1.0, label)  # Reset to original brightness
+
+        except Exception as e:
+            print(f"Error in mousePressEvent: {e}")
 
     def upload(self, label,fourier_label):
         filters = "Images (*.jpg *.jpeg *.png);;All Files (*)"
@@ -140,7 +208,7 @@ class MainApp(QMainWindow, FORM_CLASS):
             image.set_image(label)
             self.current_image_path=file_path
             self.image_dict[label]=image
-            #self.images_list.append(image)
+
 
             # Perform Fourier transform asynchronously
             self.load_fourier_component(image,fourier_label)
@@ -176,79 +244,72 @@ class MainApp(QMainWindow, FORM_CLASS):
         # Release resources when the window is closed
         cv2.destroyAllWindows()
 
-    # def mixer(self):
-    #         weights = [slider.value()/100 for slider in self.sliders_list]
-    #         chosen_comp=[combobox.currentIndex() for combobox in self.combobox_list]
-    #
-    #         for i,label in enumerate[self.image1,self.image2,self.image3,self.image4]:
-    #             weighted_sum += self.image_dict[label].components[chosen_comp[i]]*weights[i]
 
 
     def mixer(self):
         try:
+
             image_keys = [self.image1, self.image2, self.image3, self.image4]
 
             real_array = [self.image_dict[key].components[0] for key in image_keys]
             imaginary_array = [self.image_dict[key].components[1] for key in image_keys]
             phase_array = [self.image_dict[key].components[3] for key in image_keys]
             magnitudes_array = [self.image_dict[key].components[2] for key in image_keys]
+            all_components=[real_array,imaginary_array,magnitudes_array,phase_array]
+            self.apply_region(self.region_selecter.value())
+
+
+            if self.in_region_radioButton.isChecked() or self.out_region_radioButton.isChecked():
+                    all_components[self.Fourier_comboBox_1.currentIndex()][0]=self.masked_imgs[0]
+                    all_components[self.Fourier_comboBox_2.currentIndex()][1] = self.masked_imgs[1]
+                    all_components[self.Fourier_comboBox_3.currentIndex()][2] = self.masked_imgs[2]
+                    all_components[self.Fourier_comboBox_4.currentIndex()][3] = self.masked_imgs[3]
+
 
             # Find the maximum shape among the arrays
-            max_shape = max(arr.shape for arr in real_array + imaginary_array + phase_array + magnitudes_array)
-            imaginary_sum = np.zeros(max_shape, dtype=np.float32)
-            real_sum = np.zeros(max_shape, dtype=np.float32)
-            mag_sum = np.zeros(max_shape, dtype=np.float32)
-            phase_sum = np.zeros(max_shape, dtype=np.float32)
+            min_shape = min(arr.shape for arr in real_array + imaginary_array + phase_array + magnitudes_array)
+            imaginary_sum = 0
+            real_sum = 0
+            mag_sum = 0
+            phase_sum = 0
 
-            # Resize each array to the maximum shape
-            resized_real_array = [cv2.resize(arr, max_shape[::-1]) for arr in real_array]
-            resized_imaginary_array = [cv2.resize(arr, max_shape[::-1]) for arr in imaginary_array]
-            resized_phase_array = [cv2.resize(arr, max_shape[::-1]) for arr in phase_array]
-            resized_magnitudes_array = [cv2.resize(arr, max_shape[::-1]) for arr in magnitudes_array]
 
             mag_weights = [
-                slider.value()/100 * np.ones(max_shape, dtype=np.float32) if combobox.currentIndex() == 2 else np.zeros(
-                    max_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
+                slider.value()/100 * np.ones(min_shape, dtype=np.float32) if combobox.currentIndex() == 2 else np.zeros(
+                    min_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
             phase_weights = [
-                slider.value()/100 * np.ones(max_shape, dtype=np.float32) if combobox.currentIndex() == 3 else np.zeros(
-                    max_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
+                slider.value()/100 * np.ones(min_shape, dtype=np.float32) if combobox.currentIndex() == 3 else np.zeros(
+                    min_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
             imaginary_weights = [
-                slider.value()/100 * np.ones(max_shape, dtype=np.float32) if combobox.currentIndex() == 1 else np.zeros(
-                    max_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
+                slider.value()/100 * np.ones(min_shape, dtype=np.float32) if combobox.currentIndex() == 1 else np.zeros(
+                    min_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
             real_weights = [
-                slider.value()/100 * np.ones(max_shape, dtype=np.float32) if combobox.currentIndex() == 0 else np.zeros(
-                    max_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
-            # mag_weights = [slider.value() if combobox.currentIndex() == 2 else 0 for slider, combobox in
-            #                zip(self.sliders_list, self.combobox_list)]
-            # phase_weights = [slider.value() if combobox.currentIndex() == 3 else 0 for slider, combobox in
-            #                  zip(self.sliders_list, self.combobox_list)]
-            # imaginary_weights = [slider.value() if combobox.currentIndex() == 1 else 0 for slider, combobox in
-            #                      zip(self.sliders_list, self.combobox_list)]
-            # real_weights = [slider.value() if combobox.currentIndex() == 0 else 0 for slider, combobox in
-            #                 zip(self.sliders_list, self.combobox_list)]
+                slider.value()/100 * np.ones(min_shape, dtype=np.float32) if combobox.currentIndex() == 0 else np.zeros(
+                    min_shape, dtype=np.float32) for slider, combobox in zip(self.sliders_list, self.combobox_list)]
 
-            # print("Shapes of arrays:")
-            # for i, mag_arr in enumerate(magnitudes_array):
-            #     print(f"magnitudes_array[{i}]:", np.shape(mag_arr))
-            #
-            # print("phase_array:", np.shape(phase_array))
-            # print("imaginary_array:", np.shape(imaginary_array))
-            # print("real_array:", np.shape(real_array))
             if self.real_imaginary.isChecked():
                 for i in range(4):
-                    imaginary_sum += resized_imaginary_array[i] * imaginary_weights[i]
-                    real_sum += resized_real_array[i] * real_weights[i]
+                    imaginary_sum += imaginary_array[i] * imaginary_weights[i]
+                    real_sum += real_array[i] * real_weights[i]
                 mixed_image = np.fft.ifft2(np.fft.ifftshift(real_sum + 1j * imaginary_sum))
                 final_mixed_image=np.abs(mixed_image).astype(np.uint8)
-                f.display_output_image(self.output_mixer1, final_mixed_image)
+                if self.output1.isChecked():
+                    f.display_output_image(self.output_mixer1, final_mixed_image)
+                else:
+                    f.display_output_image(self.output_mixer2, final_mixed_image)
+
 
             elif self.magnitude_phase.isChecked():
                 for i in range(4):
-                    mag_sum += resized_magnitudes_array[i] * mag_weights[i]
-                    phase_sum += resized_phase_array[i] * phase_weights[i]
-                mixed_image = np.fft.ifft2(np.fft.ifftshift(mag_sum * np.exp(1j * phase_sum)))
+                    mag_sum += magnitudes_array[i] * mag_weights[i]
+                    phase_sum += phase_array[i] * phase_weights[i]
+                mixed_image = np.fft.ifft2(np.fft.ifftshift(np.multiply(mag_sum, np.exp(1j*phase_sum))))
+                cv2.imwrite('test.jpg', np.real(mixed_image))
                 final_mixed_image = np.abs(mixed_image).astype(np.uint8)
-                f.display_output_image(self.output_mixer1, final_mixed_image)
+                if self.output1.isChecked():
+                    f.display_output_image(self.output_mixer1, final_mixed_image)
+                else:
+                    f.display_output_image(self.output_mixer2, final_mixed_image)
 
             else:
                 print("Error: No mixing option selected.")
@@ -256,13 +317,44 @@ class MainApp(QMainWindow, FORM_CLASS):
         except Exception as e:
             print(f"Error during image mixing: {e}")
 
+    def update_combo_box(self):
+        for i in range(self.Fourier_comboBox_1.count()):
+            self.Fourier_comboBox_1.model().item(i).setEnabled(True)
+            self.Fourier_comboBox_2.model().item(i).setEnabled(True)
+            self.Fourier_comboBox_3.model().item(i).setEnabled(True)
+            self.Fourier_comboBox_4.model().item(i).setEnabled(True)
+
+        if self.real_imaginary.isChecked():
+            first_index_to_disable = 2
+            second_index_to_disable = 3
+            self.toggle_combo_box_options(first_index_to_disable, second_index_to_disable)
+            self.Fourier_comboBox_1.setCurrentIndex(0)
+            self.Fourier_comboBox_2.setCurrentIndex(0)
+            self.Fourier_comboBox_3.setCurrentIndex(0)
+            self.Fourier_comboBox_4.setCurrentIndex(0)
+
+        elif self.magnitude_phase.isChecked():
+            first_index_to_disable = 0
+            second_index_to_disable = 1
+            self.toggle_combo_box_options(first_index_to_disable, second_index_to_disable)
+            self.Fourier_comboBox_1.setCurrentIndex(2)
+            self.Fourier_comboBox_2.setCurrentIndex(2)
+            self.Fourier_comboBox_3.setCurrentIndex(2)
+            self.Fourier_comboBox_4.setCurrentIndex(2)
+
+    def toggle_combo_box_options(self, first_index_to_disable, second_index_to_disable):
+        self.Fourier_comboBox_1.model().item(first_index_to_disable).setEnabled(False)
+        self.Fourier_comboBox_2.model().item(first_index_to_disable).setEnabled(False)
+        self.Fourier_comboBox_3.model().item(first_index_to_disable).setEnabled(False)
+        self.Fourier_comboBox_4.model().item(first_index_to_disable).setEnabled(False)
+        self.Fourier_comboBox_1.model().item(second_index_to_disable).setEnabled(False)
+        self.Fourier_comboBox_2.model().item(second_index_to_disable).setEnabled(False)
+        self.Fourier_comboBox_3.model().item(second_index_to_disable).setEnabled(False)
+        self.Fourier_comboBox_4.model().item(second_index_to_disable).setEnabled(False)
+
 
 def main():
     app = QApplication(sys.argv)
-
-    # with open("style.qss", "r") as f:
-    #     _style = f.read()
-    #     app.setStyleSheet(_style)
 
     window = MainApp()
 
